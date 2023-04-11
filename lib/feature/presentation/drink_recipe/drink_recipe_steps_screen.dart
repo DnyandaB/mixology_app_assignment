@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:login_demo/core/router/routes.dart';
-import 'package:sizer/sizer.dart';
 
 import '../../../di/di.dart';
-import 'bloc/drinks_details_bloc.dart';
+import '../drink_details/bloc/drinks_details_bloc.dart';
+import 'package:sizer/sizer.dart';
 
-class DrinksDetailsScreen extends StatefulWidget {
+class DrinksRecipeStepsScreen extends StatefulWidget {
   final String drinkId;
 
-  const DrinksDetailsScreen({super.key, required this.drinkId});
+  const DrinksRecipeStepsScreen({super.key, required this.drinkId});
 
   @override
-  State<DrinksDetailsScreen> createState() => _DrinksListingScreenState();
+  State<DrinksRecipeStepsScreen> createState() => _DrinksRecipeStepsState();
 }
 
-class _DrinksListingScreenState extends State<DrinksDetailsScreen> {
+class _DrinksRecipeStepsState extends State<DrinksRecipeStepsScreen> {
   DrinkDetailsBloc bloc = si<DrinkDetailsBloc>();
 
   @override
   Widget build(BuildContext context) {
-    bloc.fetchDrinksDetailsAsPerId(widget.drinkId);
+    bloc.fetchDrinksRecipeStepsAsPerId(widget.drinkId);
     return Scaffold(
         backgroundColor: Colors.black,
         body: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -50,22 +49,22 @@ class _DrinksListingScreenState extends State<DrinksDetailsScreen> {
               }),
           Container(
               margin: EdgeInsets.only(top: 1.5.h),
-              width: 50.w,
+              width: 80.w,
               height: 2.5.h,
               child: Text(
-                "Ingredients",
+                "Steps",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 10.sp),
               )),
           Container(
+            width: 80.w,
+            height: 45.h,
             margin: EdgeInsets.only(top: 0.5.h, bottom: 1.h),
-            width: 50.w,
-            height: 35.h,
             child: StreamBuilder<List<String>>(
-                stream: bloc.drinkIngredientsStream,
+                stream: bloc.drinkRecipeStepsStream,
                 initialData: null,
-                builder: (context, drinksIngredients) {
-                  return drinksIngredients.data == null
+                builder: (context, drinksRecipeSteps) {
+                  return drinksRecipeSteps.data == null
                       ? Column(
                           children: const [
                             Center(
@@ -75,7 +74,7 @@ class _DrinksListingScreenState extends State<DrinksDetailsScreen> {
                             ),
                           ],
                         )
-                      : drinksIngredients.data!.isEmpty
+                      : drinksRecipeSteps.data!.isEmpty
                           ? Center(
                               child: Text(
                                 "No Data found",
@@ -86,30 +85,41 @@ class _DrinksListingScreenState extends State<DrinksDetailsScreen> {
                           : ListView.builder(
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
-                              itemCount: drinksIngredients.data!.length,
+                              itemCount: drinksRecipeSteps.data!.length,
                               itemBuilder: (context, index) {
-                                return Text(
-                                  drinksIngredients.data![index],
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                      fontSize: 9.sp, color: Colors.white),
+                                return Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 1.w,
+                                      child: Text(
+                                        index.toString(),
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                            fontSize: 9.sp,
+                                            color: Colors.yellow),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                            left: 4.w,
+                                            right: 1.w,
+                                            top: 1.h,
+                                            bottom: 1.h),
+                                        child: Text(
+                                          drinksRecipeSteps.data![index],
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                              fontSize: 9.sp,
+                                              color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 );
                               });
                 }),
           ),
-          TextButton(
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: Colors.orange,
-              padding: const EdgeInsets.all(16.0),
-              textStyle: TextStyle(fontSize: 12.sp),
-            ),
-            onPressed: () {
-              Navigator.of(context).pushNamed(Routes.drinkRecipeSteps,
-                  arguments: widget.drinkId);
-            },
-            child: const Text('Start Mixing'),
-          )
         ]));
   }
 }

@@ -8,6 +8,7 @@ import 'package:page_transition/page_transition.dart';
 
 import '../../feature/domain/usecases/drinkslist/get_drinks_list_as_per_category_usecase.dart';
 import '../../feature/presentation/drink_details/drinks_details_screen.dart';
+import '../../feature/presentation/drink_recipe/drink_recipe_steps_screen.dart';
 
 class Routes {
   ///routes
@@ -16,6 +17,7 @@ class Routes {
   static const String drinksListingAsPerCategory =
       drinksListingAsPerCategoryRoute;
   static const String drinkDetail = drinkDetailsRoute;
+  static const String drinkRecipeSteps = drinksRecipeStepsRoute;
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -38,6 +40,12 @@ class Routes {
             settings: const RouteSettings(name: drinkDetail),
             duration: const Duration(milliseconds: pageTransitionDuration),
             child:  DrinksDetailsScreen(drinkId: args.toString()),
+            type: PageTransitionType.rightToLeft);
+        case drinksRecipeStepsRoute:
+        return PageTransition(
+            settings: const RouteSettings(name: drinkRecipeSteps),
+            duration: const Duration(milliseconds: pageTransitionDuration),
+            child:  DrinksRecipeStepsScreen(drinkId: args.toString()),
             type: PageTransitionType.rightToLeft);
       default:
         return CupertinoPageRoute(

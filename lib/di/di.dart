@@ -2,8 +2,11 @@ import 'package:get_it/get_it.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:dio/dio.dart';
+import 'package:login_demo/feature/data/remotedatasource/get_drinks_details_from_api.dart';
 import 'package:login_demo/feature/data/remotedatasource/get_drinks_list_by_category.dart';
+import 'package:login_demo/feature/data/repositories/get_drink_details_repo_impl.dart';
 import 'package:login_demo/feature/data/repositories/get_drinks_list_by_category_repo_impl.dart';
+import 'package:login_demo/feature/domain/repositories/get_drink_details_by_id.dart';
 import 'package:login_demo/feature/domain/repositories/get_drinks_by_category_repository.dart';
 import 'package:login_demo/feature/domain/usecases/drinkslist/get_drinks_list_as_per_category_usecase.dart';
 
@@ -14,7 +17,9 @@ import '../feature/data/remotedatasource/get_categories_from_api.dart';
 import '../feature/data/repositories/get_categories_repo_impl.dart';
 import '../feature/domain/repositories/get_categories_repository.dart';
 import '../feature/domain/usecases/categorylist/get_category_list_usecase.dart';
+import '../feature/domain/usecases/drinkdetails/get_drink_details_as_per_id_usecase.dart';
 import '../feature/presentation/dashboard/bloc/categories_listing_bloc.dart';
+import '../feature/presentation/drink_details/bloc/drinks_details_bloc.dart';
 import '../feature/presentation/drinks_listing_as_per_category/bloc/drinks_listing_bloc.dart';
 
 GetIt si = GetIt.instance;
@@ -25,6 +30,8 @@ Future<void> init() async {
       () => FetchCategoriesBloc(getCategoryListUseCase: si()));
   si.registerFactory<FetchDrinksListingBloc>(
       () => FetchDrinksListingBloc(getDrinksListAsPerCategoryUseCase: si()));
+  si.registerFactory<DrinkDetailsBloc>(
+      () => DrinkDetailsBloc(getDrinkDetailsAsPerIdUseCase: si()));
 
   ///UseCases
   si.registerLazySingleton<GetCategoryListUseCase>(
@@ -32,6 +39,8 @@ Future<void> init() async {
   si.registerLazySingleton<GetDrinksListAsPerCategoryUseCase>(() =>
       GetDrinksListAsPerCategoryUseCase(
           getDrinksListByCategoryRepository: si()));
+  si.registerLazySingleton<GetDrinkDetailsAsPerIdUseCase>(
+      () => GetDrinkDetailsAsPerIdUseCase(getDrinkDetailsByIdRepository: si()));
 
   ///Repository
   si.registerLazySingleton<GetCategoryRepository>(
@@ -39,19 +48,23 @@ Future<void> init() async {
   si.registerLazySingleton<GetDrinksListByCategoryRepository>(() =>
       GetDrinksListByCategoryRepositoryImpl(
           getDrinksListByCategoryDataSource: si()));
+  si.registerLazySingleton<GetDrinkDetailsByIdRepository>(() =>
+      GetDrinkDetailsByIdRepositoryImpl(getDrinkDetailsByIdDataSource: si()));
 
   ///Remote DataSource
   si.registerLazySingleton<GetCategoriesDatasource>(
       () => GetCategoriesDatasourceImpl(responseParser: si()));
-  si.registerLazySingleton<GetDrinksListByCategoryDataSource>(() =>
-      GetDrinksListByCategoryDataSourceImpl(responseParser: si()));
+  si.registerLazySingleton<GetDrinksListByCategoryDataSource>(
+      () => GetDrinksListByCategoryDataSourceImpl(responseParser: si()));
+  si.registerLazySingleton<GetDrinkDetailsByIdDataSource>(
+      () => GetDrinkDetailsByIdDataSourceImpl(responseParser: si()));
 
   ///Network Info
   si.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(connectivity: si(), dataConnectionChecker: si()));
   si.registerLazySingleton<Connectivity>(() => Connectivity());
   si.registerLazySingleton<InternetConnectionChecker>(
-          () => InternetConnectionChecker());
+      () => InternetConnectionChecker());
 
   ///Network Helper
   si.registerLazySingleton<NetworkHelper>(
