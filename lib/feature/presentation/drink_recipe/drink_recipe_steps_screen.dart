@@ -87,12 +87,14 @@ class _DrinksRecipeStepsState extends State<DrinksRecipeStepsScreen> {
                               shrinkWrap: true,
                               itemCount: drinksRecipeSteps.data!.length,
                               itemBuilder: (context, index) {
+                                int count = 0;
+                                count = index + 1;
                                 return Row(
                                   children: [
                                     SizedBox(
                                       width: 1.w,
                                       child: Text(
-                                        index.toString(),
+                                        count.toString(),
                                         textAlign: TextAlign.start,
                                         style: TextStyle(
                                             fontSize: 9.sp,
