@@ -7,6 +7,7 @@ import 'package:login_demo/feature/presentation/splashscreen/splash_screen.dart'
 import 'package:page_transition/page_transition.dart';
 
 import '../../feature/domain/usecases/drinkslist/get_drinks_list_as_per_category_usecase.dart';
+import '../../feature/presentation/drink_details/drinks_details_screen.dart';
 
 class Routes {
   ///routes
@@ -33,6 +34,11 @@ class Routes {
             child:  DrinksListingScreen(categoryName: args.toString()),
             type: PageTransitionType.rightToLeft);
       case drinkDetailsRoute:
+        return PageTransition(
+            settings: const RouteSettings(name: drinkDetail),
+            duration: const Duration(milliseconds: pageTransitionDuration),
+            child:  DrinksDetailsScreen(drinkId: args.toString()),
+            type: PageTransitionType.rightToLeft);
       default:
         return CupertinoPageRoute(
             builder: (BuildContext context) => const Scaffold(

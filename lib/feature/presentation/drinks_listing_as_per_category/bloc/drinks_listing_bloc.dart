@@ -50,12 +50,6 @@ class FetchDrinksListingBloc{
       }
     }, (model) {
       errorStreamController.add(false);
-      // List<Drinks> drinksList = [];
-      // if (model != null) {
-      //   for (var element in model) {
-      //     drinksList.add(element);
-      //   }
-      // }
       drinksListAsPerCategoryListStreamController.add(model);
     });
   }

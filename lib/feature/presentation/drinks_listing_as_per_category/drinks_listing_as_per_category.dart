@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/router/route_constants.dart';
 import '../../../di/di.dart';
 import '../../data/model/drinks_listing_model.dart';
 import '../common_widgets/search_text_field.dart';
@@ -78,7 +79,11 @@ class _DrinksListingScreenState extends State<DrinksListingScreen> {
                           index,
                         ) {
                           return GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.pushNamed(context,
+                                  drinkDetailsRoute,
+                                  arguments: drinksData.data!.drinks![index].idDrink);
+                            },
                             child: Container(
                               margin:
                                   EdgeInsets.only(left: 0.2.w, right: 0.2.w),
