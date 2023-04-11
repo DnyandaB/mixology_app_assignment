@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:login_demo/core/router/route_constants.dart';
 import 'package:login_demo/feature/presentation/dashboard/dashboard_screen.dart';
+import 'package:login_demo/feature/presentation/drinks_listing_as_per_category/drinks_listing_as_per_category.dart';
 import 'package:login_demo/feature/presentation/splashscreen/splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
+
+import '../../feature/domain/usecases/drinkslist/get_drinks_list_as_per_category_usecase.dart';
 
 class Routes {
   ///routes
@@ -24,6 +27,11 @@ class Routes {
         return CupertinoPageRoute(
             builder: (BuildContext context) => const DashboardScreen());
       case drinksListingAsPerCategoryRoute:
+        return PageTransition(
+            settings: const RouteSettings(name: drinksListingAsPerCategory),
+            duration: const Duration(milliseconds: pageTransitionDuration),
+            child:  DrinksListingScreen(categoryName: args.toString()),
+            type: PageTransitionType.rightToLeft);
       case drinkDetailsRoute:
       default:
         return CupertinoPageRoute(

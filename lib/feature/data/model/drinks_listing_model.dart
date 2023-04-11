@@ -1,9 +1,9 @@
-class CategoryListModel {
+class DrinksListingByCategoryModel {
   List<Drinks>? drinks;
 
-  CategoryListModel({this.drinks});
+  DrinksListingByCategoryModel({this.drinks});
 
-  CategoryListModel.fromJson(Map<String, dynamic> json) {
+  DrinksListingByCategoryModel.fromJson(Map<String, dynamic> json) {
     if (json['drinks'] != null) {
       drinks = <Drinks>[];
       json['drinks'].forEach((v) {
@@ -22,18 +22,23 @@ class CategoryListModel {
 }
 
 class Drinks {
-  String? strCategory;
+  String? strDrink;
+  String? strDrinkThumb;
+  String? idDrink;
 
-  Drinks({this.strCategory});
+  Drinks({this.strDrink, this.strDrinkThumb, this.idDrink});
 
   Drinks.fromJson(Map<String, dynamic> json) {
-    strCategory = json['strCategory'];
+    strDrink = json['strDrink'];
+    strDrinkThumb = json['strDrinkThumb'];
+    idDrink = json['idDrink'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['strCategory'] = strCategory;
+    data['strDrink'] = strDrink;
+    data['strDrinkThumb'] = strDrinkThumb;
+    data['idDrink'] = idDrink;
     return data;
   }
 }
-

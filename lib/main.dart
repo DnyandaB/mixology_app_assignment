@@ -21,7 +21,11 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            // UI
+            brightness: Brightness.dark,
+            primaryColor: Colors.lightBlue[800],
+            // font
+            fontFamily: 'Georgia',
           ),
           initialRoute: Routes.initial,
           debugShowCheckedModeBanner: false,

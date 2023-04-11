@@ -6,7 +6,7 @@ class SearchTextField {
      return Container(
         alignment: AlignmentDirectional.center,
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: Color(0xff484646),
             borderRadius: BorderRadius.circular(4.0.w)
         ),
         child: TextFormField(
@@ -16,17 +16,24 @@ class SearchTextField {
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: TextStyle(
-                color: Color(0xff888888),
+                color: Color(0xffd2cfcf),
                 fontWeight: FontWeight.w400,
                 fontFamily: "OpenSans",
                 fontStyle: FontStyle.normal,
-                fontSize: 12.0.sp),
-            suffixIcon: InkWell(
+                fontSize: 10.0.sp),
+            prefixIcon: InkWell(
               onTap: () {},
               child: Icon(
                 Icons.search,
                 color: Color(0xff888888),
-                size: 8.0.w,
+                size: 7.0.w,
+              ),
+            ),suffixIcon: InkWell(
+              onTap: () {},
+              child: Icon(
+                Icons.close,
+                color: Color(0xff0e0d0d),
+                size: 7.0.w,
               ),
             ),
             border: InputBorder.none,

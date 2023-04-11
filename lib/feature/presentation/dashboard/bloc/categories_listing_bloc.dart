@@ -1,12 +1,12 @@
 import '../../../../core/failures/failures.dart';
-import '../../../domain/usecases/categories/get_category_list_usecase.dart';
+import '../../../domain/usecases/categorylist/get_category_list_usecase.dart';
 import '../../common_widgets/toast_message.dart';
 import 'package:rxdart/rxdart.dart';
 
 class FetchCategoriesBloc {
-  GetCategoryListUsecase getCategoryListUsecase;
+  GetCategoryListUseCase getCategoryListUseCase;
 
-  FetchCategoriesBloc({required this.getCategoryListUsecase});
+  FetchCategoriesBloc({required this.getCategoryListUseCase});
 
   ///error
   final errorStreamController = BehaviorSubject<bool>.seeded(false);
@@ -30,7 +30,7 @@ class FetchCategoriesBloc {
   fetchCategories() async {
     errorStreamController.add(false);
     showLoader(value: true);
-    var result = await getCategoryListUsecase.call();
+    var result = await getCategoryListUseCase.call();
     showLoader(value: false);
     result.fold((failure) {
       errorStreamController.add(true);

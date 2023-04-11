@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:login_demo/core/router/route_constants.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../di/di.dart';
@@ -104,7 +104,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               itemCount: categoriesData.data!.length,
                               itemBuilder: (context, index) {
                                 return InkWell(
-                                  onTap: () async {},
+                                  onTap: () async {
+                                    Navigator.pushNamed(context,
+                                        drinksListingAsPerCategoryRoute,
+                                        arguments: categoriesData.data![index]);
+                                  },
                                   child: Container(
                                     margin: EdgeInsets.only(left: 0.2.w, right: 0.2.w),
                                     width: 25.w,
@@ -115,11 +119,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                               BorderRadius.circular(4.0.w)),
                                       elevation: 2.0.w,
                                       child: Center(
-                                        child: Text(
-                                          categoriesData.data![index],
-                                          style: TextStyle(
-                                              fontSize: 10.sp,
-                                              color: Colors.black),
+                                        child: Container(
+                                          margin: EdgeInsets.only(left: 1.w, right: 1.w),
+                                          child: Text(
+                                            categoriesData.data![index],
+                                            style: TextStyle(
+                                                fontSize: 9.sp,
+                                                color: Colors.black),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -141,12 +148,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
             label: 'Search',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.add_circle_outlined),
+            label: 'Create',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.school),
             label: 'Shopping',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
+        unselectedLabelStyle: const TextStyle(color: Colors.grey),
+        unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
       ),
     );
